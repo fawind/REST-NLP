@@ -5,7 +5,7 @@ public class Text {
     private final String text;
 
     public Text() {
-        text = "";
+        text = null;
     }
 
     public Text(String text) {
