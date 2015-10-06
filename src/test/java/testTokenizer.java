@@ -112,7 +112,6 @@ public class testTokenizer {
         mvc.perform(post("/api/tokenize/tokens")
             .contentType(JsonUtil.APPLICATION_JSON_UTF8)
             .content("{}"))
-            .andDo(print())
             .andExpect(status().isBadRequest());
     }
 
