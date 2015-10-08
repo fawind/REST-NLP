@@ -1,30 +1,29 @@
 package api.controllers;
 
-import api.models.lemmatization.Lemmas;
 import api.models.Text;
+import api.models.ner.AnnotatedText;
 import api.models.response.ResponseWrapper;
-import modules.Lemmatizer;
+import modules.NamedEntityRecognizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class LemmatizationController {
+public class NERController {
 
-    private Lemmatizer lemmatizer = new Lemmatizer();
+    private NamedEntityRecognizer ner = new NamedEntityRecognizer();
 
-    @RequestMapping(value={"/api/lemmatize"}, method= RequestMethod.POST)
+    @RequestMapping(value={"/api/ner"}, method= RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<ResponseWrapper> getTokens(@RequestBody Text text) {
         if (text != null && text.getText() != null) {
-            Lemmas lemmas = new Lemmas(text.getText(), lemmatizer.lemmatize(text.getText()));
-            ResponseWrapper<Lemmas> response = new ResponseWrapper<Lemmas>(lemmas);
+            AnnotatedText annotatedText = ner.classify(text.getText());
+            ResponseWrapper<AnnotatedText> response = new ResponseWrapper<AnnotatedText>(annotatedText);
             return new ResponseEntity<ResponseWrapper>(response, HttpStatus.OK);
         } else {
             throw new HttpMessageNotReadableException("Invalid arguments");
         }
     }
-
 
 }

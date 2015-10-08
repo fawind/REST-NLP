@@ -2,7 +2,7 @@ package api.controllers;
 
 import api.models.response.ResponseWrapper;
 import api.models.Text;
-import api.models.Tokens;
+import api.models.tokenizer.Tokens;
 import modules.Tokenizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

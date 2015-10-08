@@ -1,4 +1,4 @@
-package api.models;
+package api.models.lemmatization;
 
 import java.util.List;
 
