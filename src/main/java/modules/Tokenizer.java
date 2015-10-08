@@ -14,9 +14,9 @@ public class Tokenizer {
 
 
     public List<String> tokenizeWords(String inputText) {
-        PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<CoreLabel>(new StringReader(inputText), new CoreLabelTokenFactory(), "");
+        PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<>(new StringReader(inputText), new CoreLabelTokenFactory(), "");
 
-        List<String> tokens = new ArrayList<String>();
+        List<String> tokens = new ArrayList<>();
         while (ptbt.hasNext()) {
             CoreLabel label = ptbt.next();
             tokens.add(label.toString());
@@ -28,7 +28,7 @@ public class Tokenizer {
     public List<String> tokenizeSentences(String inputText) {
         DocumentPreprocessor dp = new DocumentPreprocessor(new StringReader(inputText));
 
-        List<String> tokens = new ArrayList<String>();
+        List<String> tokens = new ArrayList<>();
         for (List<HasWord> sentence : dp) {
             tokens.add(sentence.toString());
         }

@@ -22,8 +22,8 @@ public class TokenizerController {
         if (text != null && text.getText() != null) {
             List<String> tokenList = tokenizer.tokenizeWords(text.getText());
             Tokens tokens = new Tokens(text.getText(), tokenList);
-            ResponseWrapper<Tokens> response = new ResponseWrapper<Tokens>(tokens);
-            return new ResponseEntity<ResponseWrapper>(response, HttpStatus.OK);
+            ResponseWrapper<Tokens> response = new ResponseWrapper<>(tokens);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             throw new HttpMessageNotReadableException("Invalid arguments");
         }
@@ -35,8 +35,8 @@ public class TokenizerController {
         if (text != null  && text.getText() != null) {
             List<String> tokenList = tokenizer.tokenizeSentences(text.getText());
             Tokens tokens = new Tokens(text.getText(), tokenList);
-            ResponseWrapper<Tokens> response = new ResponseWrapper<Tokens>(tokens);
-            return new ResponseEntity<ResponseWrapper>(response, HttpStatus.OK);
+            ResponseWrapper<Tokens> response = new ResponseWrapper<>(tokens);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             throw new HttpMessageNotReadableException("Invalid arguments");
         }

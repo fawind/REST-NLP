@@ -21,7 +21,7 @@ public class Lemmatizer {
     }
 
     public List<String> lemmatize(String text) {
-        List<String> lemmas = new LinkedList<String>();
+        List<String> lemmas = new LinkedList<>();
 
         Annotation document = new Annotation(text);
         this.pipeline.annotate(document);
@@ -34,6 +34,11 @@ public class Lemmatizer {
         }
 
         return lemmas;
+    }
+
+    public List<String> lemmatize(List<String> words) {
+        String text = String.join(" ", words);
+        return lemmatize(text);
     }
 
 }

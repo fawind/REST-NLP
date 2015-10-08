@@ -15,6 +15,6 @@ public class RequestExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorWrapper> handleBadRequest(HttpMessageNotReadableException e) {
         ErrorWrapper response = new ErrorWrapper(400, e.getMessage());
-        return new ResponseEntity<ErrorWrapper>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

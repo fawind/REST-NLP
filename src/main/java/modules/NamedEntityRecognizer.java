@@ -30,8 +30,8 @@ public class NamedEntityRecognizer {
     }
 
     public List<AnnotatedEntity> findEntities(List<List<CoreLabel>> classifiedText) {
-        List<AnnotatedEntity> entities = new ArrayList<AnnotatedEntity>();
-        List<String> currentEntities = new ArrayList<String>();
+        List<AnnotatedEntity> entities = new ArrayList<>();
+        List<String> currentEntities = new ArrayList<>();
         // Set starting type and offsets
         String oldType = classifiedText.get(0).get(0).get(CoreAnnotations.AnswerAnnotation.class);
         int firstOffsetStart = 0;

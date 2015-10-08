@@ -19,8 +19,8 @@ public class NERController {
     public ResponseEntity<ResponseWrapper> getTokens(@RequestBody Text text) {
         if (text != null && text.getText() != null) {
             AnnotatedText annotatedText = ner.classify(text.getText());
-            ResponseWrapper<AnnotatedText> response = new ResponseWrapper<AnnotatedText>(annotatedText);
-            return new ResponseEntity<ResponseWrapper>(response, HttpStatus.OK);
+            ResponseWrapper<AnnotatedText> response = new ResponseWrapper<>(annotatedText);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             throw new HttpMessageNotReadableException("Invalid arguments");
         }
