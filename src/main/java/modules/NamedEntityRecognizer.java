@@ -2,6 +2,7 @@ package modules;
 
 import api.models.ner.AnnotatedEntity;
 import api.models.ner.AnnotatedText;
+import api.models.ner.Offset;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreAnnotations;
@@ -49,7 +50,8 @@ public class NamedEntityRecognizer {
                     oldOffsetEnd = endOffset;
                 } else {
                     if (!oldType.equals("O")) {
-                        entities.add(new AnnotatedEntity(String.join(" ", currentEntities), oldType, firstOffsetStart, oldOffsetEnd));
+                        Offset offset = new Offset(firstOffsetStart, oldOffsetEnd);
+                        entities.add(new AnnotatedEntity(String.join(" ", currentEntities), oldType, offset));
                     }
                     currentEntities = new ArrayList<String>();
                     currentEntities.add(entity);
@@ -60,11 +62,36 @@ public class NamedEntityRecognizer {
             }
 
             if (currentEntities.size() > 0 && !oldType.equals("O")) {
-                entities.add(new AnnotatedEntity(String.join(" ", currentEntities), oldType, firstOffsetStart, oldOffsetEnd));
+                Offset offset = new Offset(firstOffsetStart, oldOffsetEnd);
+                entities.add(new AnnotatedEntity(String.join(" ", currentEntities), oldType, offset));
             }
         }
 
-        return entities;
+        return mergeEntities(entities);
+    }
+
+    public List<AnnotatedEntity> mergeEntities(List<AnnotatedEntity> entities) {
+        List<AnnotatedEntity> mergedEntities = new ArrayList<>();
+        boolean merge;
+
+        for (AnnotatedEntity entity : entities) {
+            merge = false;
+            for (AnnotatedEntity mergedEntity : mergedEntities) {
+                if (entity.getEntity().equals(mergedEntity.getEntity())) {
+                    for (Offset offset : entity.getOffsets()) {
+                        mergedEntity.addOffset(offset);
+                    }
+
+                    merge = true;
+                }
+            }
+
+            if (!merge) {
+                mergedEntities.add(entity);
+            }
+        }
+
+        return mergedEntities;
     }
 
 }

@@ -1,24 +1,25 @@
 package api.models.ner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnnotatedEntity {
 
     private String entity;
     private String type;
-    int offsetBegin;
-    int offsetEnd;
+    private List<Offset> offsets;
 
-    public AnnotatedEntity(String entity, String type, int offsetBegin, int offsetEnd) {
+    public AnnotatedEntity(String entity, String type, List<Offset> offsets) {
         this.entity = entity;
         this.type = type;
-        this.offsetBegin = offsetBegin;
-        this.offsetEnd = offsetEnd;
+        this.offsets = offsets;
     }
 
-    public AnnotatedEntity(String entity, int offsetBegin, int offsetEnd) {
+    public AnnotatedEntity(String entity, String type, Offset offset) {
         this.entity = entity;
-        this.offsetBegin = offsetBegin;
-        this.offsetEnd = offsetEnd;
-        type = null;
+        this.type = type;
+        this.offsets = new ArrayList<>();
+        this.offsets.add(offset);
     }
 
     public String getEntity() {
@@ -29,12 +30,16 @@ public class AnnotatedEntity {
         return type;
     }
 
-    public int getOffsetBegin() {
-        return offsetBegin;
+    public List<Offset> getOffsets() {
+        return offsets;
     }
 
-    public int getOffsetEnd() {
-        return offsetEnd;
+    public void setEntity(String entity) {
+        this.entity = entity;
+    }
+
+    public void addOffset(Offset offset) {
+        offsets.add(offset);
     }
 
     @Override
