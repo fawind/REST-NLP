@@ -14,13 +14,24 @@ import java.util.List;
 public class NamedEntityRecognizer {
 
     private final String DEFAULT_NER_THREECLASS_MODEL = "edu/stanford/nlp/models/ner/english.all.3class.distsim.crf.ser.gz";
+    private final String GERMAN_NER_THREECLASS_MODEL = "edu/stanford/nlp/models/ner/german.dewac_175m_600.crf.ser.gz";
     private AbstractSequenceClassifier classifier;
+    private AbstractSequenceClassifier germanClassifier;
 
     public NamedEntityRecognizer() {
         classifier = CRFClassifier.getClassifierNoExceptions(DEFAULT_NER_THREECLASS_MODEL);
+        germanClassifier = CRFClassifier.getClassifierNoExceptions(GERMAN_NER_THREECLASS_MODEL);
     }
 
     public AnnotatedText classify(String text) {
+        return findEntities(text, classifier);
+    }
+
+    public AnnotatedText classifyGerman(String text) {
+        return findEntities(text, germanClassifier);
+    }
+
+    private AnnotatedText findEntities(String text, AbstractSequenceClassifier classifier) {
         if (text.length() == 0) {
             return new AnnotatedText(text, new ArrayList<AnnotatedEntity>());
         }

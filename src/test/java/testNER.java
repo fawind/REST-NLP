@@ -62,6 +62,17 @@ public class testNER {
     }
 
     @Test
+    public void testGermanSentence() {
+        String text = "Angela Dorothea Merkel ist eine deutsche Politikerin (CDU) und seit dem 22. November 2005 " +
+                "Bundeskanzlerin der Bundesrepublik Deutschland.";
+        int entityCount = 4;
+
+        AnnotatedText annotatedText = ner.classifyGerman(text);
+        List<AnnotatedEntity> entities = annotatedText.getEntities();
+        assertEquals(entityCount, entities.size());
+    }
+
+    @Test
     public void testTextRequest() throws Exception {
         Text text = new Text("The Hasso Plattner Institute, shortly HPI, is a German information technology university " +
             "college, affiliated to the University of Potsdam and is located in Potsdam-Babelsberg nearby Berlin.");
@@ -82,4 +93,6 @@ public class testNER {
             .content("{}"))
             .andExpect(status().isBadRequest());
     }
+
+
 }

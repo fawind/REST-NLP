@@ -26,4 +26,16 @@ public class NERController {
         }
     }
 
+    @RequestMapping(value={"/api/ner/german"}, method= RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<ResponseWrapper> getGermanTokens(@RequestBody Text text) {
+        if (text != null && text.getText() != null) {
+            AnnotatedText annotatedText = ner.classifyGerman(text.getText());
+            ResponseWrapper<AnnotatedText> response = new ResponseWrapper<>(annotatedText);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            throw new HttpMessageNotReadableException("Invalid arguments");
+        }
+    }
+
 }
